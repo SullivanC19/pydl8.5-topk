@@ -16,7 +16,8 @@ Search_base::Search_base(
         float maxError,
         bool specialAlgo,
         bool stopAfterError,
-        bool from_cpp
+        bool from_cpp,
+        int k
 ) :
         nodeDataManager(nodeDataManager),
         infoGain(infoGain),
@@ -29,4 +30,5 @@ Search_base::Search_base(
         maxError(maxError),
         specialAlgo(specialAlgo),
         stopAfterError(stopAfterError),
-        from_cpp(from_cpp) {}
+        from_cpp(from_cpp),
+        k(k) {}

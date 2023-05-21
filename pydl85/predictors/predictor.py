@@ -163,6 +163,7 @@ class DL85Predictor(BaseEstimator):
             desc=False,
             asc=False,
             repeat_sort=False,
+            k=0,
             leaf_value_function=None,
             quiet=True,
             print_output=False,
@@ -189,6 +190,7 @@ class DL85Predictor(BaseEstimator):
         self.desc = desc
         self.asc = asc
         self.repeat_sort = repeat_sort
+        self.k = k
         self.leaf_value_function = leaf_value_function
         self.quiet = quiet
         self.print_output = print_output
@@ -286,6 +288,7 @@ class DL85Predictor(BaseEstimator):
                                            desc=self.desc,
                                            asc=self.asc,
                                            repeat_sort=self.repeat_sort,
+                                           k=self.k,
                                            predictor=predict,
                                            cachetype=dl85Optimizer.CacheType.CacheTrieItemset if self.cache_type == Cache_Type.Cache_TrieItemset else dl85Optimizer.CacheType.CacheHashItemset if self.cache_type == Cache_Type.Cache_HashItemset else dl85Optimizer.CacheType.CacheHashCover,
                                            cachesize=self.maxcachesize,

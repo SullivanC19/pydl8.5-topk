@@ -30,6 +30,7 @@ public:
     bool timeLimitReached = false;
     NodeDataManager *nodeDataManager;
     bool from_cpp = true;
+    int k = 0;
 
     Search_base(NodeDataManager *nodeDataManager,
                 bool infoGain,
@@ -42,7 +43,8 @@ public:
                 float maxError = NO_ERR,
                 bool specialAlgo = true,
                 bool stopAfterError = false,
-                bool from_cpp = true);
+                bool from_cpp = true,
+                int k = 0);
 
     virtual ~Search_base(){}
 

@@ -22,7 +22,8 @@ public:
                    float maxError = NO_ERR,
                    bool specialAlgo = true,
                    bool stopAfterError = false,
-                   bool use_ub = true);
+                   bool use_ub = true,
+                   int k = 0);
 
     void run();
     Error recurse(Attribute last_added, Attributes &attributes_to_visit, Depth depth, Error ub);

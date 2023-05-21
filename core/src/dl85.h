@@ -78,6 +78,7 @@ string launch(
         bool infoGain = false,
         bool infoAsc = true,
         bool repeatSort = false,
+        int k = 0,
         int timeLimit = 0,
         bool verbose_param = false,
         CacheType cache_type = CacheTrieItemset,

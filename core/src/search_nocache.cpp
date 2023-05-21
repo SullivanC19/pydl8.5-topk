@@ -15,8 +15,9 @@ Search_nocache::Search_nocache(NodeDataManager *nodeDataManager, bool infoGain, 
                                float maxError,
                                bool specialAlgo,
                                bool stopAfterError,
-                               bool use_ub) :
-        Search_base(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError, specialAlgo, stopAfterError), use_ub(use_ub) {}
+                               bool use_ub,
+                               int k) :
+        Search_base(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError, specialAlgo, stopAfterError, k), use_ub(use_ub) {}
 
 Search_nocache::~Search_nocache() {}
 
@@ -160,6 +161,9 @@ Error Search_nocache::recurse(Attribute last_added,
     bool first_item = false, second_item = true;
     Error best_error = leaf.error;
 
+    int f = next_attributes.size();
+    if (0 < k and k < f) f = k;
+
     // we evaluate the split on each candidate attribute
     for (const auto &attr: next_attributes) {
         Logger::showMessageAndReturn("\n\nWe are evaluating the attribute : ", attr);
@@ -194,6 +198,8 @@ Error Search_nocache::recurse(Attribute last_added,
         else Logger::showMessageAndReturn("error found is high = ", feature_error, " best was = ", best_error);
 
         if (stopAfterError && depth == 0 && ub < NO_ERR && best_error < ub) break;
+
+        if (--f == 0) break; // we have reached the maximum number of attributes to visit
     }
 
     Logger::showMessageAndReturn("depth = ", depth, " and init ub = ", ub, " and error after search = ", best_error);
