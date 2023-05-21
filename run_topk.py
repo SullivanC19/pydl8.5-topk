@@ -84,13 +84,29 @@ def run_topk(data, k, maxdepth):
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Run topk experiments')
-    parser.add_argument('-d', '--dataset', type=str, help='Dataset name')
-    parser.add_argument('-m', '--maxdepth', type=int, help='Max depth of tree')
+    parser.add_argument('-d', '--dataset', type=str, default='connect-4', help='Dataset name')
+    parser.add_argument('-m', '--maxdepth', type=int, default=2, help='Max depth of tree')
     parser.add_argument('-k', '--k', type=int, default=0, help='Considers only the top k feature splits sorted by information gain (in case of tie, goes with lowest index feature). If k=0, considers all features.')
     parser.add_argument('-s', '--seed', type=int, default=42, help='Random seed for train/test split, ignored for datasets with train/test split')
     parser.add_argument('-to', '--time-only', action='store_true', help='Only print time taken')
+
+    # used for db stuff
+    parser.add_argument('-i', '--index', type=int, default=-1, help='Index of test')
     
     args = parser.parse_args()
+
+    datasets = ['connect-4', 'artificial-characters']
+    k_vals = [1, 2, 4, 8, 12, 16]
+    depths = [1, 2, 3, 4, 5, 6, 7, 8]
+
+    if args.index != -1:
+        data_idx = args.index % len(datasets)
+        k_idx = (args.index // len(datasets)) % len(k_vals)
+        depth_idx = (args.index // (len(datasets) * len(k_vals))) % len(depths)
+
+        args.dataset = datasets[data_idx]
+        args.k = datasets[k_idx]
+        args.maxdepth = depths[depth_idx]
 
     data = None
     if args.dataset in CATEGORICAL_DATASETS:
