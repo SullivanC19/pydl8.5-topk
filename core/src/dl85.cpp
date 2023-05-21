@@ -26,6 +26,7 @@ string launch(ErrorVals supports,
               bool infoGain,
               bool infoAsc,
               bool repeatSort,
+              int k,
               int timeLimit,
               bool verbose_param,
               CacheType cache_type,
@@ -88,7 +89,7 @@ string launch(ErrorVals supports,
             }
             cache = new Cache_Hash_Cover(maxdepth, wipe_type, max_cache_size, wipe_factor);
             nodeDataManager = new NodeDataManager_Cover(cover, tids_error_class_callback_pointer, supports_error_class_callback_pointer, tids_error_callback_pointer);
-            searcher = new Search_cover_cache(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError <= 0 ? NO_ERR : maxError, useSpecial, maxError <= 0 ? false : stopAfterError, similarlb, dynamic_branching, similar_for_branching, from_cpp);
+            searcher = new Search_cover_cache(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError <= 0 ? NO_ERR : maxError, useSpecial, maxError <= 0 ? false : stopAfterError, similarlb, dynamic_branching, similar_for_branching, from_cpp, k);
             solution = new Solution_Cover(searcher);
         }
         else {
@@ -121,7 +122,7 @@ string launch(ErrorVals supports,
             }
             
             nodeDataManager = new NodeDataManager_Trie(cover, tids_error_class_callback_pointer, supports_error_class_callback_pointer, tids_error_callback_pointer);
-            searcher = new Search_trie_cache(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError <= 0 ? NO_ERR : maxError, useSpecial, maxError <= 0 ? false : stopAfterError, similarlb, dynamic_branching, similar_for_branching, from_cpp);
+            searcher = new Search_trie_cache(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError <= 0 ? NO_ERR : maxError, useSpecial, maxError <= 0 ? false : stopAfterError, similarlb, dynamic_branching, similar_for_branching, from_cpp, k);
             solution = new Solution_Trie(searcher);
         }
         if (from_cpp) { cout << GlobalParams::getInstance()->out; GlobalParams::getInstance()->out = ""; }
@@ -137,7 +138,7 @@ string launch(ErrorVals supports,
         GlobalParams::getInstance()->out += "Storage key: No cache";
         if (from_cpp) { cout << GlobalParams::getInstance()->out; GlobalParams::getInstance()->out = ""; }
         nodeDataManager = new NodeDataManager_Trie(cover, tids_error_class_callback_pointer, supports_error_class_callback_pointer, tids_error_callback_pointer);
-        searcher = new Search_nocache(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit,nullptr, maxError <= 0 ? NO_ERR : maxError, useSpecial,maxError > 0 && stopAfterError, use_ub);
+        searcher = new Search_nocache(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit,nullptr, maxError <= 0 ? NO_ERR : maxError, useSpecial,maxError > 0 && stopAfterError, use_ub, k);
         searcher->run(); // perform the search
         GlobalParams::getInstance()->out += "runtime = " + to_string(duration<float>(high_resolution_clock::now() - GlobalParams::getInstance()->startTime).count()) + "\n";
     }

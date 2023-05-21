@@ -95,6 +95,7 @@ int main(int argc, char *argv[]) {
     program.add_argument("-i", "--infogain").help("Use information to sort attributes order").default_value(false).implicit_value(true);
     program.add_argument("-g", "--infogainasc").help("Use ascendant order of information gain").default_value(false).implicit_value(true);
     program.add_argument("-r", "--repeatinfogainsort").help("Sort the attributes at each node").default_value(false).implicit_value(true);
+    program.add_argument("-k", "--k").help("only look at top k splits").default_value(0).scan<'d', int>();
     program.add_argument("-t", "--timelimit").help("Max runtime in seconds. O to disable it.").default_value(0).scan<'d', int>();
     program.add_argument("-c", "--cachetype").help("1- Trie + itemsets   2- Hashtable + itemsets   3- Hashtable + instances").default_value(1).scan<'d', int>();
     program.add_argument("-z", "--cachesize").help("The maximum size of the cache. O for unltd").default_value(0).scan<'d', int>();
@@ -190,6 +191,7 @@ int main(int argc, char *argv[]) {
             program.get<bool>("infogain"), //infoGain
             program.get<bool>("infogainasc"), //infoAsc
             program.get<bool>("repeatinfogainsort"), //repeatSort
+            program.get<int>("k"),  //k
             program.get<int>("timelimit"), //timeLimit
             program.get<bool>("verbose"), // verbose parameter
             cache_type, //cache type

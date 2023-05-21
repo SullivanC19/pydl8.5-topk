@@ -13,8 +13,9 @@ Search_trie_cache::Search_trie_cache(NodeDataManager *nodeDataManager, bool info
                                      bool similarlb,
                                      bool dynamic_branching,
                                      bool similar_for_branching,
-                                     bool from_cpp) :
-        Search_base(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError, specialAlgo, stopAfterError, from_cpp), similarlb(similarlb), dynamic_branching(dynamic_branching), similar_for_branching(similar_for_branching) {}
+                                     bool from_cpp,
+                                     int k) :
+        Search_base(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError, specialAlgo, stopAfterError, from_cpp, k), similarlb(similarlb), dynamic_branching(dynamic_branching), similar_for_branching(similar_for_branching) {}
 
 Search_trie_cache::~Search_trie_cache(){};
 
@@ -361,6 +362,9 @@ pair<Node*,HasInter> Search_trie_cache::recurse(const Itemset &itemset,
     Error child_ub = ub; // upper bound for the first child (item)
     bool first_item, second_item; // variable to store the order to explore items of features
 
+    int f = next_attributes.size();
+    if (0 < k and k < f) f = k;
+
     for(const auto attr : next_attributes) {
         Logger::showMessageAndReturn("\n\nWe are evaluating the attribute : ", attr);
         ((TrieNodeData*)(node->data))->curr_test = attr;
@@ -494,6 +498,8 @@ pair<Node*,HasInter> Search_trie_cache::recurse(const Itemset &itemset,
         }
 
         if (stopAfterError and depth == 0 and ub < NO_ERR and *nodeError < ub) break;
+
+        if (--f == 0) break; // we have reached the maximum number of attributes to visit
     }
     ((TrieNodeData*)(node->data))->curr_test = -1;
 

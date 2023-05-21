@@ -14,8 +14,9 @@ Search_cover_cache::Search_cover_cache(NodeDataManager *nodeDataManager, bool in
                                        bool similarlb,
                                        bool dynamic_branching,
                                        bool similar_for_branching,
-                                       bool from_cpp) :
-        Search_base(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError, specialAlgo, stopAfterError, from_cpp), similarlb(similarlb), dynamic_branching(dynamic_branching), similar_for_branching(similar_for_branching) {}
+                                       bool from_cpp,
+                                       int k) :
+        Search_base(nodeDataManager, infoGain, infoAsc, repeatSort, minsup, maxdepth, timeLimit, cache, maxError, specialAlgo, stopAfterError, from_cpp, k), similarlb(similarlb), dynamic_branching(dynamic_branching), similar_for_branching(similar_for_branching) {}
 
 Search_cover_cache::~Search_cover_cache() {}
 
@@ -358,6 +359,12 @@ pair<Node*,HasInter> Search_cover_cache::recurse(Itemset &itemset,
     Error minlb = NO_ERR, child_ub = ub; // upper bound for the first child (item)
     bool first_item, second_item; // the best feature for the current node
 
+    int f = next_attributes.size();
+    if (0 < k and k < f) {
+        // cout << "k = " << k << " and f = " << f << endl;
+        f = k;
+    }
+
     // we evaluate the split on each candidate attribute
     for(const auto &attr : next_attributes) {
         Logger::showMessageAndReturn("\n\nWe are evaluating the attribute : ", attr);
@@ -460,6 +467,10 @@ pair<Node*,HasInter> Search_cover_cache::recurse(Itemset &itemset,
 
         if (stopAfterError and depth == 0 and ub < NO_ERR and *nodeError < ub) break;
 
+        if (--f == 0) {
+            // cout << "We have reached the maximum number of attributes to visit" << endl;
+            break; // we have reached the maximum number of attributes to visit
+        }
     }
 
     if (similarlb) {
