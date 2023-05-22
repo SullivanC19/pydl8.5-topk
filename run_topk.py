@@ -105,7 +105,7 @@ if __name__ == '__main__':
         depth_idx = (args.index // (len(datasets) * len(k_vals))) % len(depths)
 
         args.dataset = datasets[data_idx]
-        args.k = k_idx[k_idx]
+        args.k = k_vals[k_idx]
         args.maxdepth = depths[depth_idx]
 
         print(args.dataset, args.k, args.maxdepth)
