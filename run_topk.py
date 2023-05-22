@@ -95,7 +95,7 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
 
-    datasets = ['connect-4', 'artificial-characters']
+    datasets = CATEGORICAL_DATASETS + NUMERICAL_DATASETS + TEST_TRAIN_DATASETS
     k_vals = [1, 2, 4, 8, 12, 16]
     depths = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -105,8 +105,10 @@ if __name__ == '__main__':
         depth_idx = (args.index // (len(datasets) * len(k_vals))) % len(depths)
 
         args.dataset = datasets[data_idx]
-        args.k = datasets[k_idx]
+        args.k = k_idx[k_idx]
         args.maxdepth = depths[depth_idx]
+
+        print(args.dataset, args.k, args.maxdepth)
 
     data = None
     if args.dataset in CATEGORICAL_DATASETS:
