@@ -50,7 +50,7 @@ def main(std=2):
             errorbar=('se', std),
             ax=ax,
             marker='d',
-            color='blue',
+            color='purple',
             dashes=False,
             size=2,
         )
@@ -64,7 +64,7 @@ def main(std=2):
             errorbar=None,
             ax=ax,
             marker='o',
-            color='red',
+            color='pink',
             dashes=False,
             linestyle='',
         )
@@ -78,7 +78,7 @@ def main(std=2):
             errorbar=None,
             ax=ax,
             marker='d',
-            color='red',
+            color='pink',
             dashes=False,
             linestyle='',
             size=2,
