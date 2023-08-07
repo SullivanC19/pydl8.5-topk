@@ -1,5 +1,8 @@
 import os
 import numpy as np
+import pandas as pd
+from datetime import datetime
+from glob import glob
 from sklearn.model_selection import train_test_split
 
 from topk.dataloader import load_data, load_data_numerical, load_data_numerical_tt_split
@@ -90,6 +93,32 @@ TIMESTAMP_FORMAT = "%Y-%m-%d-%H:%M:%S"
 
 SEEDS = list(range(42, 52))
 TRAIN_SIZE = 0.8
+
+def save_results(results: pd.DataFrame, experiment: str, dataset: str):
+    df = pd.DataFrame(results)
+    timestamp = datetime.now().strftime(TIMESTAMP_FORMAT)
+    dir_dataset_results = os.path.join(RESULTS_PATH, experiment, dataset)
+    if not os.path.exists(dir_dataset_results):
+        os.makedirs(dir_dataset_results)
+    df.to_csv(os.path.join(dir_dataset_results, f"results-{timestamp}.csv"))
+
+
+def load_latest_results(experiment: str, dataset: str) -> pd.DataFrame:
+    results_dir = os.path.join(RESULTS_PATH, experiment, dataset)
+    if not os.path.exists(results_dir):
+        raise ValueError(f"Results directory does not exist: {results_dir}")
+
+    results_files = [
+        os.path.basename(f) for f in
+        glob(os.path.join(results_dir, 'results-*.csv'))
+    ]
+    timestamps = [
+        datetime.strptime(f[len('results-'):-len('.csv')], TIMESTAMP_FORMAT)
+        for f in results_files
+    ]
+    most_recent_results_file = results_files[timestamps.index(max(timestamps))]
+    return pd.read_csv(os.path.join(results_dir, most_recent_results_file))
+
 
 def get_data_splits(dataset: str):
     if dataset in TEST_TRAIN_DATASETS:

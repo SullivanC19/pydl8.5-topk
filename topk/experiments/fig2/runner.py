@@ -8,7 +8,7 @@ from topk.algorithms.run_topk import search
 from .constants import K_VALUES, DEPTH_VALUES, TIME_LIMIT
 
 def main(dataset: str):
-    from topk.globals import get_data_splits, RESULTS_PATH, TIMESTAMP_FORMAT
+    from topk.globals import get_data_splits, save_results
 
     print(f"Running Figure 2 Experiment on Dataset {dataset}...")
 
@@ -49,10 +49,5 @@ def main(dataset: str):
                 print(timeout, test_acc)
         split_idx += 1
 
-    df = pd.DataFrame(results)
-    timestamp = datetime.now().strftime(TIMESTAMP_FORMAT)
-    dir_dataset_results = os.path.join(RESULTS_PATH, "fig2", dataset)
-    if not os.path.exists(dir_dataset_results):
-        os.makedirs(dir_dataset_results)
-    df.to_csv(os.path.join(dir_dataset_results, f"results-{timestamp}.csv"))
+    save_results(pd.DataFrame(results), "fig2", dataset)
 
