@@ -24,26 +24,20 @@ def main(std=2):
         # - star to represent k = d
         # - legend to have Top-{k} (remove k=0)
 
-        timeout = results.groupby(['k', 'depth'])['timeout'].agg(
-            lambda arr: np.any(arr)
-        ).reset_index()
-        print(timeout)
-        markers = []
-
-        # for k in K_VALUES:
-
+        # results['timeout'] = results.groupby(['k', 'depth'])['timeout'].agg(
+        #     lambda arr: np.any(arr)
+        # ).reset_index()
 
         sns.lineplot(
             results,
             x='depth',
             y='test_acc',
             hue='k',
-            # style=
+            style='timeout',
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
-            style=('k', 'depth'),
-            marker=True
+            markers=['o', '$\circ$'],
         )
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
