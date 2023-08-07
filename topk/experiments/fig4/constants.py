@@ -1,0 +1,2 @@
+DEPTH = 3
+TIME_LIMIT = 10

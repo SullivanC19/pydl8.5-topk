@@ -92,3 +92,5 @@ mem_script.sh
 /get_mem_generic.sh
 
 /wheelhouse/
+
+/topk/results/

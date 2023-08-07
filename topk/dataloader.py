@@ -89,8 +89,8 @@ def load_data(data_path, dataset_name, seed=4, frac_train=0.8, convert_to_int=Tr
         enc.fit(x_train + x_test)
 
         x_train = enc.transform(x_train).toarray().tolist()
-        x_test = enc.transform(x_test).toarray().tolist()
-        
+        x_test = None if frac_train == 1 else enc.transform(x_test).toarray().tolist()
+
         feature_value_dict = {i: [0, 1] for i in range(len(x_train[0]))}
         
     return x_train, y_train, x_test, y_test, feature_value_dict, classes

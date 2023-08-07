@@ -54,7 +54,7 @@ float Search_nocache::informationGain(ErrorVals notTaken, ErrorVals taken) {
 
 Attributes Search_nocache::getSuccessors(Attributes &last_candidates, Attribute last_added) {
 
-    std::multimap<float, Attribute> gain;
+    std::multimap<std::pair<float, int>, Attribute> gain;
     Attributes next_candidates;
     next_candidates.reserve(last_candidates.size() - 1);
 
@@ -82,7 +82,7 @@ Attributes Search_nocache::getSuccessors(Attributes &last_candidates, Attribute 
                 ErrorVals sup_class_left = nodeDataManager->cover->temporaryIntersect(candidate, false).first;
                 ErrorVals sup_class_right = newErrorVals();
                 subErrorVals(current_sup_class, sup_class_left, sup_class_right);
-                gain.insert(std::pair<float, Attribute>(informationGain(sup_class_left, sup_class_right), candidate));
+                gain.insert(std::pair<std::pair<float, int>, Attribute>({informationGain(sup_class_left, sup_class_right), infoAsc ? candidate : -candidate}, candidate));
                 deleteErrorVals(sup_class_left);
                 deleteErrorVals(sup_class_right);
             }

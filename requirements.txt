@@ -15,3 +15,5 @@ pytest
 pytest-cov
 graphviz
 cvxpy
+pandas
+gosdt

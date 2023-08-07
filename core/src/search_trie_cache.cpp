@@ -115,7 +115,7 @@ float Search_trie_cache::informationGain(ErrorVals notTaken, ErrorVals taken) {
 
 Attributes Search_trie_cache::getSuccessors(Attributes &last_candidates, Attribute last_added, const Itemset &itemset, Node* node) {
 
-    std::multimap<float, Attribute> gain;
+    std::multimap<std::pair<float, int>, Attribute> gain;
     Attributes next_candidates;
 
     // the current node does not fulfill the frequency criterion. In correct situation, this case won't happen
@@ -145,7 +145,7 @@ Attributes Search_trie_cache::getSuccessors(Attributes &last_candidates, Attribu
                 ErrorVals sup_class_left = nodeDataManager->cover->temporaryIntersect(candidate, false).first;
                 ErrorVals sup_class_right = newErrorVals();
                 subErrorVals(current_sup_class, sup_class_left, sup_class_right);
-                gain.insert(std::pair<float, Attribute>(informationGain(sup_class_left, sup_class_right), candidate));
+                gain.insert(std::pair<std::pair<float, int>, Attribute>({informationGain(sup_class_left, sup_class_right), infoAsc ? candidate : -candidate}, candidate));
                 deleteErrorVals(sup_class_left);
                 deleteErrorVals(sup_class_right);
             } else next_candidates.push_back(candidate);

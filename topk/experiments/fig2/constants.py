@@ -1,0 +1,3 @@
+K_VALUES = [1, 2, 4, 8, 16, 0]
+DEPTH_VALUES = [3, 4, 5, 6, 7, 8]
+TIME_LIMIT = 10
