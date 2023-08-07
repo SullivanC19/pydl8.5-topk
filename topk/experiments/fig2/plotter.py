@@ -20,6 +20,9 @@ def main(std=2):
         ax = ax_array[i // nrows, i % nrows]
         results = load_latest_results("fig2", dataset)
 
+        filled = results.groupby(['k', 'depth'])['timeout'].agg(
+            lambda arr: not np.any(arr)
+        )
         sns.lineplot(
             results,
             x='depth',
@@ -27,8 +30,9 @@ def main(std=2):
             hue='k',
             estimator='mean',
             errorbar=('se', std),
+            fill=filled,
             ax=ax,
-            # markers=
+            markers=[]
         )
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
