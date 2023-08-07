@@ -28,32 +28,22 @@ def main(std=2):
             lambda arr: np.any(arr)
         ).reset_index()
         print(timeout)
-        # makrers = []
-        # for _, row in results.iterrows():
-        #     print(row['k'])
-        #     print(timeout[(timeout['k'] == row['k']) \
-        #                   & (timeout['depth'] == row['depth'])]['timeout'].values[0])
+        markers = []
+
         # for k in K_VALUES:
-        #     for depth in DEPTH_VALUES:
-        #
-        # markers = [
-        #     '*' if row['k'] == 0 else (
-        #         '$\circ$' if (
-        #             timeout[(timeout['k'] == row['k']) \
-        #                     & (timeout['depth'] == row['depth'])]['timeout'].values[0]
-        #         ) else 'o')
-        #     for _, row in results.iterrows()
-        # ]
-        # print(markers)
+
+
         sns.lineplot(
             results,
             x='depth',
             y='test_acc',
             hue='k',
+            # style=
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
-            markers='*',
+            style=('k', 'depth'),
+            marker=True
         )
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
