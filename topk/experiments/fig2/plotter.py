@@ -29,7 +29,7 @@ def main(std=2):
         # ).reset_index()
 
         sns.lineplot(
-            results[results['k'] == 0],
+            results[results['k'] > 0],
             x='depth',
             y='test_acc',
             hue='k',
