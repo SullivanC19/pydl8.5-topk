@@ -20,43 +20,35 @@ def main(std=2):
     for i, dataset in enumerate(['artificial-characters']):
         ax = ax_array[i // nrows, i % nrows]
         results = load_latest_results("fig2", dataset)
-
-        # - circ to get hollow marker
-        # - star to represent k = d
-        # - legend to have Top-{k} (remove k=0)
-
-        # results['timeout'] = results.groupby(['k', 'depth'])['timeout'].agg(
-        #     lambda arr: np.any(arr)
-        # ).reset_index()
+        results['k'] = results['k'].replace(0, 32)
 
         sns.lineplot(
-            results[results['k'] > 0],
+            results[results['k'] != 32],
             x='depth',
             y='test_acc',
             hue='k',
+            hue_norm=(0, 32),
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
             marker='o',
             dashes=False,
         )
-
         sns.lineplot(
-            results[results['k'] == 0],
+            results[results['k'] == 32],
             x='depth',
             y='test_acc',
             hue='k',
+            hue_norm=(0, 32),
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
             marker='d',
-            color='purple',
             dashes=False,
-            size=2,
         )
 
         sns.lineplot(
-            results[(results['k'] > 0) & (results['timeout'])],
+            results[(results['k'] != 32) & (results['timeout'])],
             x='depth',
             y='test_acc',
             style='k',
@@ -64,13 +56,13 @@ def main(std=2):
             errorbar=None,
             ax=ax,
             marker='o',
-            color='pink',
+            color='orange',
             dashes=False,
             linestyle='',
         )
 
         sns.lineplot(
-            results[(results['k'] == 0) & (results['timeout'])],
+            results[(results['k'] == 32) & (results['timeout'])],
             x='depth',
             y='test_acc',
             style='k',
@@ -78,11 +70,13 @@ def main(std=2):
             errorbar=None,
             ax=ax,
             marker='d',
-            color='pink',
+            color='orange',
             dashes=False,
             linestyle='',
-            size=2,
         )
+
+        ax.set_xlabel('Depth')
+        ax.set_ylabel('Test Accuracy')
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
         #     acc=lambda arr: np.mean(arr), 'err':
