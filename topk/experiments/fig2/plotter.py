@@ -53,7 +53,7 @@ def main(std=2):
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
-            markers=['*', 'o'],
+            markers='*',
         )
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
