@@ -18,3 +18,4 @@ cvxpy
 pandas
 gosdt
 seaborn
+sortedcontainers

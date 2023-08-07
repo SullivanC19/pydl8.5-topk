@@ -20,7 +20,16 @@ def main(std=2):
         ax = ax_array[i // nrows, i % nrows]
         results = load_latest_results("fig2", dataset)
 
-        sns.lineplot(results, x='depth', y='test_acc', estimator='mean', ax=ax)
+        sns.lineplot(
+            results,
+            x='depth',
+            y='test_acc',
+            hue='k',
+            estimator='mean',
+            errorbar=('se', std),
+            ax=ax,
+            # markers=
+        )
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
         #     acc=lambda arr: np.mean(arr), 'err':
