@@ -29,7 +29,7 @@ def main(std=2):
         # ).reset_index()
 
         sns.lineplot(
-            results,
+            results[results['k'] == 0],
             x='depth',
             y='test_acc',
             hue='k',
@@ -38,6 +38,18 @@ def main(std=2):
             errorbar=('se', std),
             ax=ax,
             markers=['o', '$\circ$'],
+        )
+
+        sns.lineplot(
+            results[results['k'] == 0],
+            x='depth',
+            y='test_acc',
+            color='blue',
+            style='timeout',
+            estimator='mean',
+            errorbar=('se', std),
+            ax=ax,
+            markers=['*', 'x'],
         )
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
