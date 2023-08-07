@@ -37,7 +37,8 @@ def main(std=2):
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
-            markers=['o', '$\circ$'],
+            markers=['o', 'o'],
+            fillstyles=[True, False],
         )
 
         sns.lineplot(
@@ -49,7 +50,8 @@ def main(std=2):
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
-            markers=['*', 'x'],
+            markers=['*', '*'],
+            fillstyles=[True, False]
         )
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
