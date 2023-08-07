@@ -87,7 +87,8 @@ BINARY_DATA_PATH = os.path.join("topk", "data", "binary")
 RESULTS_PATH = os.path.join("topk", "results", "rebuttal")
 TIMESTAMP_FORMAT = "%Y-%m-%d-%H:%M:%S"
 
-SEEDS = list(range(42, 52))
+# SEEDS = list(range(42, 52))
+SEEDS = [42]
 TRAIN_SIZE = 0.8
 
 def get_data_splits(dataset: str):

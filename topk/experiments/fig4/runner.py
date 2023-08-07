@@ -45,6 +45,9 @@ def main(dataset: str):
                 "train_acc": train_acc,
                 "test_acc": test_acc,
             })
+
+            print(train_acc, "vs.", test_acc)
+
         split_idx += 1
 
     df = pd.DataFrame(results)

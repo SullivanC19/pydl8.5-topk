@@ -5,7 +5,6 @@ import os
 
 from .constants import DEPTH_VALUES, RUNS_PER_DATASET, MODELS
 
-
 def main(dataset: str):
     from topk.globals import get_full_data, RESULTS_PATH, TIMESTAMP_FORMAT
 
@@ -19,11 +18,7 @@ def main(dataset: str):
     num_samples_values = np.unique(np.round(np.linspace(10, total_samples, num=RUNS_PER_DATASET)).astype(np.int32))
     num_features_values = np.unique(np.round(np.linspace(10, total_features, num=RUNS_PER_DATASET)).astype(np.int32))
 
-
-    print("\nIterating on # samples...")
-
-    # restricted number of samples
-    for model, search in MODELS.items():
+    for model, runner in MODELS.items():
         print(f"Model: {model}")
         for depth in DEPTH_VALUES:
             print(f"Depth: {depth}")
@@ -31,7 +26,8 @@ def main(dataset: str):
                 print(f"Num Samples: {num_samples}")
                 X_sub = X[:num_samples, :]
                 y_sub = y[:num_samples]
-                result = search(X_sub, y_sub, depth)
+
+                result = runner(X_sub, y_sub, depth)
                 time = result["time"]
                 timeout = result["timeout"]
                 results.append({
@@ -49,19 +45,12 @@ def main(dataset: str):
                 if timeout:
                     break
 
-
-    print("\nIterating on # features...")
-
-    # restricted number of features
-    for model, search in MODELS.items():
-        print(f"Model: {model}")
-        for depth in DEPTH_VALUES:
-            print(f"Depth: {depth}")
             for num_features in num_features_values:
                 print(f"Num Features: {num_features}")
                 X_sub = X[:, :num_features]
                 y_sub = y
-                result = search(X_sub, y_sub, depth)
+
+                result = runner(X_sub, y_sub, depth)
                 time = result["time"]
                 timeout = result["timeout"]
                 results.append({
@@ -72,6 +61,8 @@ def main(dataset: str):
                     "num_features": num_features,
                     "timeout": timeout,
                 })
+
+                print(timeout, time)
 
                 # stop increasing number of features if already out of time
                 if timeout:
