@@ -3,6 +3,7 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.markers import MarkerStyle
 import seaborn as sns
 
 from topk.globals import load_latest_results, ALL_DATASETS
@@ -33,25 +34,52 @@ def main(std=2):
             x='depth',
             y='test_acc',
             hue='k',
-            style='timeout',
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
-            markers=['o', 'o'],
-            fillstyles=[True, False],
+            marker='o',
+            dashes=False,
         )
 
         sns.lineplot(
             results[results['k'] == 0],
             x='depth',
             y='test_acc',
-            color='blue',
-            style='timeout',
+            hue='k',
             estimator='mean',
             errorbar=('se', std),
             ax=ax,
-            markers=['*', '*'],
-            fillstyles=[True, False]
+            marker='*',
+            color='blue',
+            dashes=False,
+        )
+
+        sns.lineplot(
+            results[(results['k'] > 0) & (results['timeout'])],
+            x='depth',
+            y='test_acc',
+            style='k',
+            estimator='mean',
+            errorbar=None,
+            ax=ax,
+            marker='o',
+            color='red',
+            dashes=False,
+            linestyle='',
+        )
+
+        sns.lineplot(
+            results[(results['k'] == 0) & (results['timeout'])],
+            x='depth',
+            y='test_acc',
+            style='k',
+            estimator='mean',
+            errorbar=None,
+            ax=ax,
+            marker='*',
+            color='red',
+            dashes=False,
+            linestyle='',
         )
 
         # data = results.groupby(['k', 'depth'])['test_acc'].agg(
