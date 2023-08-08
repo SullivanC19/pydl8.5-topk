@@ -1,7 +1,9 @@
+import multiprocessing
 import time
 from typing import Dict, Any
 import pandas as pd
 from multiprocessing import Process, Queue, TimeoutError
+from queue import Empty
 from gosdt import GOSDT
 
 from .decorators import silence
@@ -49,7 +51,7 @@ def search(
     try:
         out = queue.get(timeout=time_limit * 10)
         p.join(timeout=time_limit * 10)
-    except TimeoutError:
+    except (TimeoutError, Empty):
         return {
             'tree': BinaryClassificationTree(),
             'time': -1,

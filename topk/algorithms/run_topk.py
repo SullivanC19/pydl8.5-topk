@@ -1,6 +1,7 @@
 import time
 from typing import Dict, Any
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Queue, TimeoutError
+from queue import Empty
 from pydl85 import DL85Classifier, Cache_Type
 import numpy as np
 
@@ -64,7 +65,7 @@ def search(
     try:
         out = queue.get(timeout=time_limit * 10)
         p.join(timeout=time_limit * 10)
-    except TimeoutError:
+    except (TimeoutError, Empty):
         return {
             'tree': BinaryClassificationTree(),
             'time': -1,
