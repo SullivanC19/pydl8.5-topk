@@ -61,8 +61,15 @@ def search(
     queue = Queue()
     p = Process(target=search_target, args=(config, X_train, y_train, queue))
     p.start()
-    out = queue.get()
-    p.join(timeout=time_limit * 10)
+    try:
+        out = queue.get(timeout=time_limit * 10)
+        p.join(timeout=time_limit * 10)
+    except TimeoutError:
+        return {
+            'tree': BinaryClassificationTree(),
+            'time': -1,
+            'timeout': True,
+        }
     return out
 
 
