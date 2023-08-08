@@ -46,8 +46,9 @@ def search(
     queue = Queue()
     p = Process(target=search_target, args=(config, X_train, y_train, queue))
     p.start()
-    p.join()
-    return queue.get()
+    out = queue.get()
+    p.join(timeout=time_limit * 10)
+    return out
 
 def parse(clf: GOSDT) -> BinaryClassificationTree:
     def parse_node(node: dict) -> BinaryClassificationTree:

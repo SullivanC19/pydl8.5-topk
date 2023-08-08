@@ -61,8 +61,9 @@ def search(
     queue = Queue()
     p = Process(target=search_target, args=(config, X_train, y_train, queue))
     p.start()
-    p.join()
-    return queue.get()
+    out = queue.get()
+    p.join(timeout=time_limit * 10)
+    return out
 
 
 def parse(clf: DL85Classifier) -> BinaryClassificationTree:
