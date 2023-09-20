@@ -3,7 +3,7 @@ from topk.algorithms.run_gosdt import search as gosdt_search
 from topk.algorithms.run_murtree import search as murtree_search
 
 DEPTH_VALUES = [4, 5, 6]
-TIME_LIMIT = 10
+TIME_LIMIT = 600
 REGULARIZATION = 0.001
 RUNS_PER_DATASET = 30
 

@@ -8,7 +8,7 @@ from topk.dataloader import load_data, load_data_numerical, load_data_numerical_
 CATEGORICAL_DATA_PATH = "topk/data/categorical"
 NUMERICAL_DATA_PATH = "topk/data/numerical"
 TEST_TRAIN_DATA_PATH = "topk/data/numerical"
-
+ 
 CATEGORICAL_DATASETS = [
     "audiology",
     "balance-scale",

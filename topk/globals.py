@@ -80,7 +80,7 @@ ALL_DATASETS = [
     "tic-tac-toe",
 ]
 
-EXPERIMENTS = ["fig2", "fig3", "fig4"]
+EXPERIMENTS = ["fig2", "fig3", "fig4", "fig6"]
 
 CATEGORICAL_DATA_PATH = os.path.join("topk", "data", "categorical")
 NUMERICAL_DATA_PATH = os.path.join("topk", "data", "numerical")

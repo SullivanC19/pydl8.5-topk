@@ -4,6 +4,7 @@ from topk.globals import EXPERIMENTS, ALL_DATASETS
 from topk.experiments.fig2.runner import main as run_fig2
 from topk.experiments.fig3.runner import main as run_fig3
 from topk.experiments.fig4.runner import main as run_fig4
+from topk.experiments.fig6.runner import main as run_fig6
 
 
 if __name__ == '__main__':
@@ -36,3 +37,5 @@ if __name__ == '__main__':
         run_fig3(dataset)
     if experiment == "fig4":
         run_fig4(dataset)
+    if experiment == "fig6":
+        run_fig6(dataset)

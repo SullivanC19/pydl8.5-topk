@@ -94,3 +94,5 @@ mem_script.sh
 /wheelhouse/
 
 /topk/results/
+
+*.pyc
