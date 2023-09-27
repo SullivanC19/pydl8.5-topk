@@ -47,6 +47,7 @@
 /core/tests_run/
 /core/main_reg.cpp
 
+__pycache__/
 /pydl85/__pycache__/
 /pydl85/supervised/classifiers/__pycache__/
 /pydl85/supervised/classifiers/utils/__pycache__/
