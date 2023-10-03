@@ -66,8 +66,10 @@ def search(
         out = queue.get(timeout=time_limit * 10)
         p.join(timeout=time_limit * 10)
     except (TimeoutError, Empty):
+        tree = BinaryClassificationTree()
+        tree.fit(X_train, y_train, num_labels=max(y_train) + 1)
         return {
-            'tree': BinaryClassificationTree(),
+            'tree': tree,
             'time': -1,
             'timeout': True,
         }
